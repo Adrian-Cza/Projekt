@@ -114,7 +114,7 @@ void SimulateDay() {
     if (newRecoveries > infected) {
         newRecoveries = infected;
     }
-
+    verify = CheckPopulation((susceptible - newInfections), (infected + newInfections - newRecoveries), (recovered + newRecoveries));
     if (verify) {
         day++;
         susceptible -= newInfections;
@@ -163,7 +163,7 @@ void ChangeRates(double &x, double &y) {
             y = temp2;
         }
         else {
-            cout << "Value out of range";
+            cout << "Value out of range" << endl;
         }
     }
 }
