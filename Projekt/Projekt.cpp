@@ -1,4 +1,5 @@
 ﻿#include <iostream>
+#include <cstdlib>
 
 using namespace std;
 
@@ -11,6 +12,7 @@ double infectionRate = .20;
 double recoveryRate = .10;
 
 void ShowPopulation(int day, int susceptible, int infected, int recovered);
+void Clear();
 
 int main()
 {
@@ -23,4 +25,8 @@ void ShowPopulation(int day, int susceptible, int infected, int recovered) {
     cout << "Infected: " << infected << endl;
     cout << "Recovered: " << recovered << endl;
     cout << "Total: " << susceptible + infected + recovered << endl;
+}
+
+void Clear() {
+    system("cls");
 }
