@@ -21,6 +21,7 @@ void Menu();
 void TryParseInt(string a, int &b);
 void TryParseDouble(string c, double& d);
 void SimulateDay();
+bool CheckPopulation(int susceptible, int infected, int recovered);
 
 int main()
 {
@@ -85,7 +86,7 @@ void Menu() {
         SimulateDay();
         break;
     case 2:
-        
+        Clear();
         break;
     case 3:
         Clear();
@@ -99,6 +100,7 @@ void Menu() {
 }
 
 void SimulateDay() {
+    bool verify = 1;
     int temp = infected;
     int newInfections = floor(temp * infectionRate);
     if (newInfections > susceptible) {
@@ -110,8 +112,27 @@ void SimulateDay() {
         newRecoveries = infected;
     }
 
-    day++;
-    susceptible -= newInfections;
-    infected = infected + newInfections - newRecoveries;
-    recovered += newRecoveries;
+    if (verify) {
+        day++;
+        susceptible -= newInfections;
+        infected = infected + newInfections - newRecoveries;
+        recovered += newRecoveries;
+    }
+    else {
+        cout << "Incorrect population state!";
+    }
+}
+
+bool CheckPopulation(int susceptible, int infected, int recovered) {
+    if (susceptible >= 0 && infected >= 0 && recovered >= 0) {
+        if (susceptible + infected + recovered == 100) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+    else {
+        return false;
+    }
 }
