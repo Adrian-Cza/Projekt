@@ -2,6 +2,7 @@
 #include <cstdlib>
 #include <string>
 #include <stdexcept>
+#include <cmath>
 
 using namespace std;
 
@@ -9,6 +10,7 @@ int susceptible = 80;
 int infected = 10;
 int recovered = 10;
 int day = 0;
+bool loop = 1;
 
 double infectionRate = .20;
 double recoveryRate = .10;
@@ -18,11 +20,15 @@ void Clear();
 void Menu();
 void TryParseInt(string a, int &b);
 void TryParseDouble(string c, double& d);
+void SimulateDay();
 
 int main()
 {
-    //ShowPopulation(day, susceptible, infected, recovered);
-    //Menu();
+    while (loop == true) {
+        ShowPopulation(day, susceptible, infected, recovered);
+        Menu();
+    }
+   
 }
 
 void ShowPopulation(int day, int susceptible, int infected, int recovered) {
@@ -75,17 +81,37 @@ void Menu() {
 
     switch (choice) {
     case 1: 
-        
+        Clear();
+        SimulateDay();
         break;
     case 2:
         
         break;
     case 3:
-        
+        Clear();
+        loop = 0;
         break;
     default:
         cout << "Option couldn't be found! \n";
         Menu();
         break;
     }
+}
+
+void SimulateDay() {
+    int temp = infected;
+    int newInfections = floor(temp * infectionRate);
+    if (newInfections > susceptible) {
+        newInfections = susceptible;
+    }
+
+    int newRecoveries = floor(temp * recoveryRate);
+    if (newRecoveries > infected) {
+        newRecoveries = infected;
+    }
+
+    day++;
+    susceptible -= newInfections;
+    infected = infected + newInfections - newRecoveries;
+    recovered += newRecoveries;
 }
