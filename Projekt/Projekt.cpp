@@ -19,9 +19,10 @@ void ShowPopulation(int day, int susceptible, int infected, int recovered);
 void Clear();
 void Menu();
 void TryParseInt(string a, int &b);
-void TryParseDouble(string c, double& d);
+void TryParseRate(string c, double &d, bool &a);
 void SimulateDay();
 bool CheckPopulation(int susceptible, int infected, int recovered);
+void ChangeRates(double &x, double &y);
 
 int main()
 {
@@ -56,15 +57,16 @@ void TryParseInt(string a, int &b) {
     }
 }
 
-void TryParseDouble(string c, double& d) {
+void TryParseRate(string c, double &d, bool &a) {
     try {
         d = stod(c);
+        a = true;
     }
     catch (const invalid_argument& e) {
         cout << "Invalid input\n";
     }
     catch (const out_of_range& e) {
-        cout << "The number is too large or too small for an int.\n";
+        cout << "The number is too large or too small for a double.\n";
     }
 }
 
@@ -87,6 +89,7 @@ void Menu() {
         break;
     case 2:
         Clear();
+        ChangeRates(infectionRate, recoveryRate);
         break;
     case 3:
         Clear();
@@ -134,5 +137,33 @@ bool CheckPopulation(int susceptible, int infected, int recovered) {
     }
     else {
         return false;
+    }
+}
+
+void ChangeRates(double &x, double &y) {
+    string input1, input2;
+    double temp1, temp2;
+    bool is1set = false, is2set = false;
+
+    cout << "Enter infection rate (0-1): ", cin >> input1;
+    TryParseRate(input1, temp1, is1set);
+    if (is1set) {
+        if (temp1 >= 0 && temp1 <= 1) {
+            x = temp1;
+        }
+        else {
+            cout << "Value out of range";
+        }
+    }
+
+    cout << "\nEnter recovery rate (0-1)", cin >> input2;
+    TryParseRate(input2, temp2, is2set);
+    if (is2set) {
+        if (temp2 >= 0 && temp2 <= 1) {
+            y = temp2;
+        }
+        else {
+            cout << "Value out of range";
+        }
     }
 }
