@@ -17,6 +17,7 @@ void ShowPopulation(int day, int susceptible, int infected, int recovered);
 void Clear();
 void Menu();
 void TryParseInt(string a, int &b);
+void TryParseDouble(string c, double& d);
 
 int main()
 {
@@ -39,6 +40,18 @@ void Clear() {
 void TryParseInt(string a, int &b) {
     try {
         b = stoi(a);
+    }
+    catch (const invalid_argument& e) {
+        cout << "Invalid input\n";
+    }
+    catch (const out_of_range& e) {
+        cout << "The number is too large or too small for an int.\n";
+    }
+}
+
+void TryParseDouble(string c, double& d) {
+    try {
+        d = stod(c);
     }
     catch (const invalid_argument& e) {
         cout << "Invalid input\n";
