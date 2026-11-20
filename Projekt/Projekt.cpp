@@ -27,6 +27,7 @@ void TryParseRate(string c, double &d, bool &a);
 void SimulateDay();
 bool CheckPopulation(int susceptible, int infected, int recovered);
 void ChangeRates(double &x, double &y);
+void ShowHistory();
 
 int main()
 {
@@ -108,20 +109,7 @@ void Menu() {
         break;
     case 3:
         Clear();
-        for (int i = 0; i <= day; i++) {
-            cout << "Day: " << i << endl;
-            cout << "Susceptible: " << populationHistory[i][0] << endl;
-            cout << "Infected: " << populationHistory[i][1] << endl;
-            cout << "Recovered: " << populationHistory[i][2] << endl;
-            if (i == 0) {
-                cout << "New infections: -" << endl;
-                cout << "New recoveries: -" << endl;
-            }
-            else {
-                cout << "New infections: " << dailyNewInfections[i] << endl;
-                cout << "New recoveries: " << DailyRecoveries[i] << endl;
-            }
-        }
+        ShowHistory();
         break;
     case 4:
         Clear();
@@ -203,6 +191,23 @@ void ChangeRates(double &x, double &y) {
         }
         else {
             cout << "Value out of range" << endl;
+        }
+    }
+}
+
+void ShowHistory() {
+    for (int i = 0; i <= day; i++) {
+        cout << "Day: " << i << endl;
+        cout << "Susceptible: " << populationHistory[i][0] << endl;
+        cout << "Infected: " << populationHistory[i][1] << endl;
+        cout << "Recovered: " << populationHistory[i][2] << endl;
+        if (i == 0) {
+            cout << "New infections: -" << endl;
+            cout << "New recoveries: -" << endl << endl;
+        }
+        else {
+            cout << "New infections: " << dailyNewInfections[i - 1] << endl;
+            cout << "New recoveries: " << DailyRecoveries[i - 1] << endl << endl;
         }
     }
 }
