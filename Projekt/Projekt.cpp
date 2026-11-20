@@ -14,7 +14,7 @@ bool loop = 1;
 const int maxDays = 100;
 int populationHistory[101][3];
 int dailyNewInfections[maxDays];
-int dailyNewRecoveries[maxDays];
+int DailyRecoveries[maxDays];
 
 double infectionRate = .20;
 double recoveryRate = .10;
@@ -85,7 +85,8 @@ void Menu() {
     cout << "\n=== Epidemic simulator ===" << endl;
     cout << "1. Simulate next day" << endl;
     cout << "2. Change model parameters" << endl;
-    cout << "3. Exit" << endl;
+    cout << "3. Show simulation history" << endl;
+    cout << "4. Exit" << endl;
     cout << "Your choice: ", cin >> input;
     
     TryParseInt(input, choice);
@@ -106,6 +107,23 @@ void Menu() {
         ChangeRates(infectionRate, recoveryRate);
         break;
     case 3:
+        Clear();
+        for (int i = 0; i <= day; i++) {
+            cout << "Day: " << i << endl;
+            cout << "Susceptible: " << populationHistory[i][0] << endl;
+            cout << "Infected: " << populationHistory[i][1] << endl;
+            cout << "Recovered: " << populationHistory[i][2] << endl;
+            if (i == 0) {
+                cout << "New infections: -" << endl;
+                cout << "New recoveries: -" << endl;
+            }
+            else {
+                cout << "New infections: " << dailyNewInfections[i] << endl;
+                cout << "New recoveries: " << DailyRecoveries[i] << endl;
+            }
+        }
+        break;
+    case 4:
         Clear();
         loop = 0;
         break;
@@ -140,7 +158,7 @@ void SimulateDay() {
         populationHistory[day][2] = recovered;
 
         dailyNewInfections[day - 1] = newInfections;
-        dailyNewRecoveries[day - 1] = newRecoveries;
+        DailyRecoveries[day - 1] = newRecoveries;
     }
     else {
         cout << "Incorrect population state!";
