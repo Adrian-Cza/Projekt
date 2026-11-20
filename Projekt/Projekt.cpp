@@ -13,6 +13,8 @@ int day = 0;
 bool loop = 1;
 const int maxDays = 100;
 int populationHistory[101][3];
+int dailyNewInfections[maxDays];
+int dailyNewRecoveries[maxDays];
 
 double infectionRate = .20;
 double recoveryRate = .10;
@@ -136,6 +138,9 @@ void SimulateDay() {
         populationHistory[day][0] = susceptible;
         populationHistory[day][1] = infected;
         populationHistory[day][2] = recovered;
+
+        dailyNewInfections[day - 1] = newInfections;
+        dailyNewRecoveries[day - 1] = newRecoveries;
     }
     else {
         cout << "Incorrect population state!";
