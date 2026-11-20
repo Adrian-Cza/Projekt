@@ -11,6 +11,8 @@ int infected = 10;
 int recovered = 10;
 int day = 0;
 bool loop = 1;
+const int maxDays = 100;
+int populationHistory[101][3];
 
 double infectionRate = .20;
 double recoveryRate = .10;
@@ -26,6 +28,10 @@ void ChangeRates(double &x, double &y);
 
 int main()
 {
+    populationHistory[0][0] = 80;
+    populationHistory[0][1] = 10;
+    populationHistory[0][2] = 10;
+
     while (loop == true) {
         ShowPopulation(day, susceptible, infected, recovered);
         Menu();
@@ -85,7 +91,13 @@ void Menu() {
     switch (choice) {
     case 1: 
         Clear();
-        SimulateDay();
+        if (day < maxDays) {
+            SimulateDay();
+        }
+        else {
+            cout << "You've reached max days of simulation" << endl << endl;
+        }
+        
         break;
     case 2:
         Clear();
@@ -120,6 +132,10 @@ void SimulateDay() {
         susceptible -= newInfections;
         infected = infected + newInfections - newRecoveries;
         recovered += newRecoveries;
+
+        populationHistory[day][0] = susceptible;
+        populationHistory[day][1] = infected;
+        populationHistory[day][2] = recovered;
     }
     else {
         cout << "Incorrect population state!";
